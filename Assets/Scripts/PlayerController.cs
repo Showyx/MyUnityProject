@@ -4,10 +4,14 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     private Rigidbody2D rb;
+    [SerializeField] private Animator playerAnim;
+    private bool characterIsWalking;
+    private bool flipSprite;
+    [SerializeField] private SpriteRenderer characterBody;
     private float moveHorizontal;
     private float moveVertical;
     private InputAction moveAction;
-    public float movementSpeed;
+    [SerializeField] float movementSpeed;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -28,5 +32,10 @@ public class PlayerController : MonoBehaviour
         Vector2 movement = new Vector2(moveHorizontal, moveVertical);
         movement = Vector2.ClampMagnitude(movement, 1.0f);
         rb.linearVelocity = movement * movementSpeed;
+
+        characterIsWalking = movement.magnitude > 0.1f;
+        playerAnim.SetBool("isWalking", characterIsWalking);
+        flipSprite = movement.x < 0.1f;
+        characterBody.flipX = flipSprite;
     }
 }
