@@ -1,12 +1,17 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+[RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : MonoBehaviour
 {
     private Rigidbody2D rb;
-    [SerializeField] private Animator playerAnim;
-    private bool characterIsWalking;
-    private bool flipSprite;
+    [SerializeField] private AudioClip _footstep;
+    [SerializeField] private Animator _playerAnim;
+    private bool _characterIsWalking;
+    private bool _flipSprite;
+    private float _nextFootstepAudio = 0f;
+
     [SerializeField] private SpriteRenderer characterBody;
     private float moveHorizontal;
     private float moveVertical;
@@ -24,18 +29,34 @@ public class PlayerController : MonoBehaviour
     {
         HandlePlayerMovement();
     }
-    private void HandlePlayerMovement() 
+    private void HandlePlayerMovement()
     {
-        float moveHorizontal = moveAction.ReadValue<Vector2>().x;
-        float moveVertical = moveAction.ReadValue<Vector2>().y;
+        moveHorizontal = moveAction.ReadValue<Vector2>().x;
+        moveVertical = moveAction.ReadValue<Vector2>().y;
 
         Vector2 movement = new Vector2(moveHorizontal, moveVertical);
         movement = Vector2.ClampMagnitude(movement, 1.0f);
         rb.linearVelocity = movement * movementSpeed;
 
-        characterIsWalking = movement.magnitude > 0.1f;
-        playerAnim.SetBool("isWalking", characterIsWalking);
-        flipSprite = movement.x < 0.1f;
-        characterBody.flipX = flipSprite;
+        _characterIsWalking = movement.magnitude > 0.1f;
+        _playerAnim.SetBool("isWalking", _characterIsWalking);
+
+        if (_characterIsWalking)
+        {
+            HandleWalkingSounds();
+        }
+
+        _flipSprite = movement.x < 0.1f;
+        characterBody.flipX = _flipSprite;
+    }
+
+    private void HandleWalkingSounds()
+    {
+        if (Time.time >= _nextFootstepAudio)
+        {
+            AudioManager.Instance.PlayAudio(_footstep, AudioManager.SoundType.SFX, 1f, false);
+            float audioFrequency = _playerAnim.GetCurrentAnimatorClipInfo(0)[0].clip.length / 2f;
+            _nextFootstepAudio = Time.time + audioFrequency;
+        }
     }
 }
