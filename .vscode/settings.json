@@ -66,5 +66,9 @@
     "explorer.fileNesting.patterns": {
         "*.sln": "*.csproj"
     },
-    "dotnet.defaultSolution": "MyUnityProject.slnx"
+    "dotnet.defaultSolution": "MyUnityProject.slnx",
+    "[csharp]": {
+        "editor.defaultFormatter": "ms-dotnettools.csharp"
+    },
+    "editor.formatOnSave": true
 }

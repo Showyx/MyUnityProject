@@ -3,16 +3,22 @@ using UnityEngine.InputSystem;
 
 public class PlayerStaffController : MonoBehaviour
 {
-    private InputAction _fireAction;
+    [SerializeField] Projectile _projectile;
+    [SerializeField] AudioClip _shootSound;
+    [SerializeField] Transform _tip;
     [SerializeField] private float _fireRate;
+    private InputAction _fireAction;
     private float _nextFireTime;
+    private Vector2 _lookDirection;
 
     private void Awake()
     {
         _fireAction = InputSystem.actions.FindAction("Attack");
     }
+
     private void Update()
     {
+        SetLookDirection();
         if (Time.timeScale == 0f)
             return;
 
@@ -35,6 +41,14 @@ public class PlayerStaffController : MonoBehaviour
 
     private void Shoot()
     {
-        Debug.Log("Bang!");
+        AudioManager.Instance.PlayAudio(_shootSound, AudioManager.SoundType.SFX, 0.4f, false);
+        Projectile newProjectile = Instantiate(_projectile, _tip.position, Quaternion.identity);
+        newProjectile.InitializeProjectile(_lookDirection);
+    }
+
+    private void SetLookDirection()
+    {
+        Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+        _lookDirection = (mousePosition - (Vector2)transform.position).normalized;
     }
 }
