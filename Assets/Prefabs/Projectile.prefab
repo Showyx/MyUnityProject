@@ -111,9 +111,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c36df63c652a8f449bbbfb5b8e559d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Projectile
-  _travelSpeed: 0
-  _damage: 0
   _rb: {fileID: 6761725419745114139}
+  _hitParticles: {fileID: 154387360615260797, guid: 5a6cf0df22006ad4fa49a700c6a47742, type: 3}
 --- !u!1 &514918096622407427
 GameObject:
   m_ObjectHideFlags: 0

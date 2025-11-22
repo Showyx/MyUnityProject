@@ -4,8 +4,9 @@ using UnityEngine.WSA;
 public class Projectile : MonoBehaviour
 {
     private float _travelSpeed = 4;
-    private float _damage = 1;
+    private float _damage;
     [SerializeField] private Rigidbody2D _rb;
+    [SerializeField] private ParticleSystem _hitParticles;
 
     public void InitializeProjectile(Vector2 direction)
     {
@@ -28,6 +29,8 @@ public class Projectile : MonoBehaviour
 
     private void DestroyProjectile()
     {
+        ParticleSystem hitParticles = Instantiate(_hitParticles, transform.position, Quaternion.identity);
+        Destroy(hitParticles.gameObject, 1f);
         Destroy(gameObject);
     }
 }
