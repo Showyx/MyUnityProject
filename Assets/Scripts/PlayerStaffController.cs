@@ -32,8 +32,15 @@ public class PlayerStaffController : MonoBehaviour
 
     private void RotateStaff()
     {
-        Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
-        Vector2 lookDirection = (mousePosition - (Vector2)transform.position).normalized;
+        //Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+        Vector2 mousePosition = Mouse.current.position.ReadValue();
+        if (mousePosition.x < 0 || mousePosition.x > Screen.width ||
+        mousePosition.y < 0 || mousePosition.y > Screen.height)
+        {
+            return;
+        }
+        Vector2 mouseWorldPosition = Camera.main.ScreenToWorldPoint(mousePosition);
+        Vector2 lookDirection = (mouseWorldPosition - (Vector2)transform.position).normalized;
 
         float angle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);

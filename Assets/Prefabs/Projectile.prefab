@@ -113,6 +113,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Projectile
   _rb: {fileID: 6761725419745114139}
   _hitParticles: {fileID: 154387360615260797, guid: 5a6cf0df22006ad4fa49a700c6a47742, type: 3}
+  _enemyHitSound: {fileID: 8300000, guid: 5b254377a90571d44a0df3ebee6aca80, type: 3}
 --- !u!1 &514918096622407427
 GameObject:
   m_ObjectHideFlags: 0
