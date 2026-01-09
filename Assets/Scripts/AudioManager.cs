@@ -62,16 +62,22 @@ public class AudioManager : MonoBehaviour
     public void ChangeMasterVolume(float volume)
     {
         _audioMixer.SetFloat(MASTER_VOLUME_NAME, Mathf.Log10(volume) * 10);
+        PlayerPrefs.SetFloat("Settings.MasterVolume", volume);
+        PlayerPrefs.Save();
     }
 
     public void ChangeMusicVolume(float volume)
     {
         _audioMixer.SetFloat(MUSIC_VOLUME_NAME, Mathf.Log10(volume) * 10);
+        PlayerPrefs.SetFloat("Settings.MusicVolume", volume);
+        PlayerPrefs.Save();
     }
 
     public void ChangeSFXVolume(float volume)
     {
         _audioMixer.SetFloat(SFX_VOLUME_NAME, Mathf.Log10(volume) * 10);
+        PlayerPrefs.SetFloat("Settings.SFXVolume", volume);
+        PlayerPrefs.Save();
     }
 
     public enum SoundType
